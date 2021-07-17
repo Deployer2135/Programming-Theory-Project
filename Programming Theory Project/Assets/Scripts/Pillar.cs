@@ -55,7 +55,7 @@ public class EncapsulationPillar : Pillar
 
     public EncapsulationPillar() { PillarType = "Encapsulation"; }
 
-    public new string ShowInfo()
+    public override string ShowInfo()
     {
         string info = ShowType() + "; " + ShowLength();
         return info;
