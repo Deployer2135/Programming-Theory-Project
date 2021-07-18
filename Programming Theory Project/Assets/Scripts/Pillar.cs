@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pillar
+public class AbstractionPillar
 {
     protected int length;
     public string PillarType { get; set; }
     public virtual int Length
     { get => length; set => length = value; }
 
-    public Pillar() { PillarType = "Abstraction"; }
+    public AbstractionPillar() { PillarType = "Abstraction"; }
 
     public virtual string ShowInfo()
     {
@@ -17,9 +17,14 @@ public class Pillar
     }
 }
 
-public class InheritancePillar : Pillar
+public class InheritancePillar : AbstractionPillar
 {
     public InheritancePillar() { PillarType = "Inheritance"; }
+
+    public override string ShowInfo()
+    {
+        return base.ShowInfo() + "; Parent: " + ShowParentClass();
+    }
 
     public string ShowParentClass()
     {
@@ -27,7 +32,7 @@ public class InheritancePillar : Pillar
     }
 }
 
-public class PolymorphismPillar : Pillar
+public class PolymorphismPillar : AbstractionPillar
 {
     public override int Length { get => length + 100; set => length = value; }
 
@@ -35,22 +40,16 @@ public class PolymorphismPillar : Pillar
 
     public override string ShowInfo()
     {
-        return base.ShowInfo() + "; length: " + Length;
+        return base.ShowInfo() + "; Length: " + Length;
     }
 }
 
-public class EncapsulationPillar : Pillar
+public class EncapsulationPillar : AbstractionPillar
 {
     public new int Length
     {
         get => length;
-        set
-        {
-            if (value < 0)
-                length = 0;
-            else
-                length = value;
-        }
+        set { length = value < 0 ? 0 : value; }
     }
 
     public EncapsulationPillar() { PillarType = "Encapsulation"; }
